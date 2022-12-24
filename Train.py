@@ -57,7 +57,7 @@ def test(model, path, dataset):
 
         loss_P1 = structure_loss(res, gts)
         loss_P2 = structure_loss(res1, gts)
-        loss_p1p2 = sklearn.metrics.mean_squared_error(loss_P1, loss_P2)
+        loss_p1p2 = mean_squared_error(loss_P1, loss_P2)
         loss = loss_P1 + alpha*loss_P2 + beta*loss_p1p2
         
         loss_P2_rec.update(loss_P2.data, opt.batchsize)
