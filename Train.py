@@ -289,7 +289,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--epoch', type=int,
-                        default=4, help='epoch number')
+                        default=2, help='epoch number')
 
     parser.add_argument('--lr', type=float,
                         default=1e-4, help='learning rate')
@@ -366,12 +366,12 @@ if __name__ == '__main__':
             
         adjust_lr(optimizer, opt.lr, epoch, 0.1, 200)
         train(train_loader, model, optimizer, epoch, opt.test_path)
-        plot_train(dict_plot, name)                           # validation--> meandice score vs epochs
+#         plot_train(dict_plot, name)                           # validation--> meandice score vs epochs
 #         plot_train_loss(train_loss, loss_name)                # training --> loss vs epochs
 #         plot_val_loss(val_loss, valloss_name)                 # validation -> loss vs epochs
          
     
     # plot the eval.png in the training stage
     plot_train(dict_plot, name)
-    plot_train_loss(train_loss, loss_name)
-    plot_val_loss(val_loss, valloss_name)
+#     plot_train_loss(train_loss, loss_name)
+#     plot_val_loss(val_loss, valloss_name)
