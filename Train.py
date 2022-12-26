@@ -158,11 +158,11 @@ def train(train_loader, model, optimizer, epoch, test_path):
         for dataset in ['Val']:   #'CVC-300','GlaS', 'CVC-ClinicDB', 'Kvasir', 'CVC-ColonDB', 'ETIS-LaribPolypDB',          ####### updated ########
             dataset_dice = test(model, test1path, dataset)
             logging.info('epoch: {}, dataset: {}, dice: {}'.format(epoch, dataset, dataset_dice))
-            print(dataset, ': ', dataset_dice)
-            dict_plot[dataset].append(dataset_dice)                                                                                    ## validation steps ##
-        meandiceA = test(model, test_path, 'TestA' )                                                                          ## test ##
+            print(dataset, 'mean dice score for validation data: ', dataset_dice)
+            dict_plot[dataset].append(dataset_dice)                                                                         ## validation steps ##
+        meandiceA = test(model, test_path, 'TestA' )                                                                        ## test ##
         print('Mean dice score - TestA data: ', meandiceA)                                                                        
-        meandiceB = test(model, test_path, 'TestB' )                                                                          ## test ##
+        meandiceB = test(model, test_path, 'TestB' )                                                                        ## test ##
         print('Mean dice score - TestB data: ', meandiceB)
         dict_plot['TestA'].append(meandiceA)
         dict_plot['TestB'].append(meandiceB)
@@ -274,10 +274,10 @@ if __name__ == '__main__':
     name = ['Val', 'TestA', 'TestB']   #'CVC-300'
     
     train_loss = {'train_loss_p1':[], 'train_loss_p2':[], 'train_loss_p1p2':[],  'train_loss_total':[]}
-    loss_name = {'train_loss_p1', 'train_loss_p2', 'train_loss_p1p2', 'train_loss_total'}
+    loss_name = ['train_loss_p1', 'train_loss_p2', 'train_loss_p1p2', 'train_loss_total']
     
     val_loss = {'val_loss_p1':[], 'val_loss_p2':[], 'val_loss_p1p2':[],  'val_loss_total':[]}
-    valloss_name = {'val_loss_p1', 'val_loss_p2', 'val_loss_p1p2', 'val_loss_total'}
+    valloss_name = ['val_loss_p1', 'val_loss_p2', 'val_loss_p1p2', 'val_loss_total']
     ##################model_name#############################
     model_name = 'PolypPVT'
     ###############################################
