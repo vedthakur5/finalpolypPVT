@@ -144,10 +144,10 @@ def train(train_loader, model, optimizer, epoch, test_path):
                   ' lateral-5(loss_p2_record): {:0.4f}]'.
                   format(datetime.now(), epoch, opt.epoch, i, total_step,
                          loss_P2_record.show()))
-            train_loss['train_loss_p1'].append(float(loss_P1_record))
-            train_loss['train_loss_p2'].append(float(loss_P2_record))
-            train_loss['train_loss_p1p2'].append(float(loss_p1p2_record))
-            train_loss['train_loss_total'].append(float(loss_total_record))
+            train_loss['train_loss_p1'].append(loss_P1_record)
+            train_loss['train_loss_p2'].append(loss_P2_record)
+            train_loss['train_loss_p1p2'].append(loss_p1p2_record)
+            train_loss['train_loss_total'].append(loss_total_record)
             
     # save model 
     save_path = (opt.train_save)
