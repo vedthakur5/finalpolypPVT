@@ -136,7 +136,7 @@ def train(train_loader, model, optimizer, epoch, test_path):
         # ---- train visualization ----
         if i % 20 == 0 or i == total_step:
             print('{} Epoch [{:03d}/{:03d}], Step [{:04d}/{:04d}], '
-                  ' lateral-5: {:0.4f}]'.
+                  ' lateral-5(loss_p2_record): {:0.4f}]'.
                   format(datetime.now(), epoch, opt.epoch, i, total_step,
                          loss_P2_record.show()))
             train_loss['train_loss_p1'].append(loss_P1_record)
@@ -158,7 +158,7 @@ def train(train_loader, model, optimizer, epoch, test_path):
         for dataset in ['Val']:   #'CVC-300','GlaS', 'CVC-ClinicDB', 'Kvasir', 'CVC-ColonDB', 'ETIS-LaribPolypDB',          ####### updated ########
             dataset_dice = test(model, test1path, dataset)
             logging.info('epoch: {}, dataset: {}, dice: {}'.format(epoch, dataset, dataset_dice))
-            print(dataset, 'mean dice score for validation data: ', dataset_dice)
+            print(dataset, 'mean dice score: ', dataset_dice)
             dict_plot[dataset].append(dataset_dice)                                                                         ## validation steps ##
         meandiceA = test(model, test_path, 'TestA' )                                                                        ## test ##
         print('Mean dice score - TestA data: ', meandiceA)                                                                        
@@ -229,20 +229,20 @@ def plot_train(dict_plot=None, name = None):
  
     #############  Train - loss curve ###########
     
-def plot_train_loss(train_loss=None, loss_name = None):
-    color = ['red', 'lawngreen', 'blue'] #'lime', 'gold', 'm', 'plum', 'blue'
-    line = ['-', "--"]
-    for i in range(len(loss_name)):
-        plt.plot(train_loss[loss_name[i]], label=loss_name[i], color=color[i], linestyle=line[(i + 1) % 2])
-        #### transfuse and axhline are just to add horizontal line.. nothing to do with chart data ####
-        ## 'GlaS': 0.902, 'CVC-ClinicDB': 0.918, 'Kvasir': 0.918, 'CVC-ColonDB': 0.773,'ETIS-LaribPolypDB': 0.733, 'test':0.83
-        transfuse = {'train_loss_p1': 0.902, 'train_loss_p2': 0.83, 'train_loss_p1p2': 0.773, 'train_loss_total': 0.70}   #'CVC-300' 
-        plt.axhline(y=transfuse[loss_name[i]], color=color[i], linestyle='-')
-    plt.xlabel("epoch")
-    plt.ylabel("loss")
-    plt.title('Training - loss vs epochs')
-    plt.legend()
-    plt.savefig('train_loss-epoch.png')
+# def plot_train_loss(train_loss=None, loss_name = None):
+#     color = ['red', 'lawngreen', 'blue'] #'lime', 'gold', 'm', 'plum', 'blue'
+#     line = ['-', "--"]
+#     for i in range(len(loss_name)):
+#         plt.plot(train_loss[loss_name[i]], label=loss_name[i], color=color[i], linestyle=line[(i + 1) % 2])
+#         #### transfuse and axhline are just to add horizontal line.. nothing to do with chart data ####
+#         ## 'GlaS': 0.902, 'CVC-ClinicDB': 0.918, 'Kvasir': 0.918, 'CVC-ColonDB': 0.773,'ETIS-LaribPolypDB': 0.733, 'test':0.83
+#         transfuse = {'train_loss_p1': 0.902, 'train_loss_p2': 0.83, 'train_loss_p1p2': 0.773, 'train_loss_total': 0.70}   #'CVC-300' 
+#         plt.axhline(y=transfuse[loss_name[i]], color=color[i], linestyle='-')
+#     plt.xlabel("epoch")
+#     plt.ylabel("loss")
+#     plt.title('Training - loss vs epochs')
+#     plt.legend()
+#     plt.savefig('train_loss-epoch.png')
 
  
     #############    Validation - loss curve ###########
@@ -362,11 +362,11 @@ if __name__ == '__main__':
         adjust_lr(optimizer, opt.lr, epoch, 0.1, 200)
         train(train_loader, model, optimizer, epoch, opt.test_path)
         plot_train(dict_plot, name)                           # validation--> meandice score vs epochs
-        plot_train_loss(train_loss, loss_name)                # training --> loss vs epochs
+#         plot_train_loss(train_loss, loss_name)                # training --> loss vs epochs
 #         plot_val_loss(val_loss, valloss_name)                 # validation -> loss vs epochs
          
     
     # plot the eval.png in the training stage
     plot_train(dict_plot, name)
-    plot_train_loss(train_loss, loss_name)
+#     plot_train_loss(train_loss, loss_name)
 #     plot_val_loss(val_loss, valloss_name)
