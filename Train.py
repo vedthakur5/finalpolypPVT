@@ -120,7 +120,9 @@ def train(train_loader, model, optimizer, epoch, test_path):
             beta = 2
             loss_P1 = structure_loss(P1, gts)
             loss_P2 = structure_loss(P2, gts)
-            loss_p1p2 = np.square(np.subtract(P1, P2)).mean()
+            nP1 = np.array(loss_P1)
+            nP2 = np.array(loss_P2)
+            loss_p1p2 = np.square(np.subtract(nP1, nP2)).mean()
             loss = loss_P1 + alpha*loss_P2 + beta*loss_p1p2
             # ---- backward ----
             loss.backward()
