@@ -97,10 +97,15 @@ def train(train_loader, model, optimizer, epoch, test_path):
     global train_loss
 
     size_rates = [0.75, 1, 1.25] 
-    loss_P2_record = AvgMeter()
+#     loss_P2_record = AvgMeter()
 #     loss_P1_record = AvgMeter()
 #     loss_p1p2_record = AvgMeter()
 #     loss_total_record = AvgMeter()
+    
+    loss_P2_record
+    loss_P1_record
+    loss_p1p2_record
+    loss_total_record
 
     for i, pack in enumerate(train_loader, start=1):
         for rate in size_rates:
