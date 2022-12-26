@@ -119,10 +119,12 @@ def train(train_loader, model, optimizer, epoch, test_path):
             alpha = 1.5
             beta = 2
             loss_P1 = structure_loss(P1, gts)
+            print(type(loss_P1))
             loss_P2 = structure_loss(P2, gts)
             nloss_P1 = loss_P1.cpu().detach().numpy()
             nloss_P2 = loss_P2.cpu().detach().numpy()
-            loss_p1p2 = np.square(np.subtract(nloss_P1, nloss_P2)).mean().item()
+            loss_p1p2 = np.square(np.subtract(nloss_P1, nloss_P2)).mean()
+            print(type(loss_p1p2))
             loss = loss_P1 + alpha*loss_P2 + beta*loss_p1p2
             # ---- backward ----
             loss.backward()
