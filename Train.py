@@ -14,6 +14,8 @@ from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 
 def structure_loss(pred, mask):
+    print('pred shape: ',pred.shape)
+    print('mask shape: ',mask.shape)
     weit = 1 + 5 * torch.abs(F.avg_pool2d(mask, kernel_size=31, stride=1, padding=15) - mask)
     wbce = F.binary_cross_entropy_with_logits(pred, mask, reduce='none')
     wbce = (weit * wbce).sum(dim=(2, 3)) / weit.sum(dim=(2, 3))
