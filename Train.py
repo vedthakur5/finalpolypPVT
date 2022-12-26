@@ -230,7 +230,7 @@ def plot_train(dict_plot=None, name = None):
     plt.title('Validation - meandice score vs epochs')  #Train
     plt.legend()
     plt.savefig('val_meandice-epoch.png')
-    # plt.show()
+    plt.show()
  
     #############  Train - loss curve ###########
     
@@ -248,6 +248,7 @@ def plot_train_loss(train_loss=None, loss_name = None):
     plt.title('Training - loss vs epochs')
     plt.legend()
     plt.savefig('train_loss-epoch.png')
+    plt.show()
 
  
     #############    Validation - loss curve ###########
@@ -373,5 +374,5 @@ if __name__ == '__main__':
     
     # plot the eval.png in the training stage
     plot_train(dict_plot, name)
-#     plot_train_loss(train_loss, loss_name)
+    plot_train_loss(train_loss, loss_name)
 #     plot_val_loss(val_loss, valloss_name)
