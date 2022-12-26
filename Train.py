@@ -120,8 +120,8 @@ def train(train_loader, model, optimizer, epoch, test_path):
             beta = 2
             loss_P1 = structure_loss(P1, gts)
             loss_P2 = structure_loss(P2, gts)
-            loss_P1 = loss_P1.cpu().numpy()
-            loss_P2 = loss_P2.cpu().numpy()
+            loss_P1 = loss_P1.cpu().detach().numpy()
+            loss_P2 = loss_P2.cpu().detach().numpy()
             loss_p1p2 = np.square(np.subtract(loss_P1, loss_P2)).mean()
             loss = loss_P1 + alpha*loss_P2 + beta*loss_p1p2
             # ---- backward ----
