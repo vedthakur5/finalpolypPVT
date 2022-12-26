@@ -14,8 +14,8 @@ from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 
 def structure_loss(pred, mask):
-    print('pred shape: ',pred.shape)
-    print('mask shape: ',mask.shape)
+#     print('pred shape: ',pred.shape)
+#     print('mask shape: ',mask.shape)
     weit = 1 + 5 * torch.abs(F.avg_pool2d(mask, kernel_size=31, stride=1, padding=15) - mask)
     wbce = F.binary_cross_entropy_with_logits(pred, mask, reduce='none')
     wbce = (weit * wbce).sum(dim=(2, 3)) / weit.sum(dim=(2, 3))
@@ -27,8 +27,7 @@ def structure_loss(pred, mask):
 
     return (wbce + wiou).mean()
 
-alpha = 1.5
-beta = 2
+
 
 def test(model, path, dataset):
     
@@ -37,7 +36,6 @@ def test(model, path, dataset):
 #     loss_P1_rec = AvgMeter()
 #     loss_p1p2_rec = AvgMeter()
 #     loss_total_rec = AvgMeter()
-   
 
     data_path = os.path.join(path, dataset)
     image_root = '{}/images/'.format(data_path)
@@ -47,16 +45,16 @@ def test(model, path, dataset):
     test_loader = test_dataset(image_root, gt_root, 352)
     DSC = 0.0
     for i in range(num1):
-        image, gts, name = test_loader.load_data()                 #gt
+        image, gts, name = test_loader.load_data()                                        #gt
         gt = np.asarray(gts, np.float32)
         gt /= (gt.max() + 1e-8)
         image = image.cuda()
 
         res, res1  = model(image)
         
-        
-        ###### calculate loss & append it to global val_loss #######
-
+        ###### calculate loss & append it to global val_loss ######
+#         alpha = 1.5
+#         beta = 2
 #         loss_P1 = structure_loss(res, gts)
 #         loss_P2 = structure_loss(res1, gts)
 #         loss_p1p2 = mean_squared_error(loss_P1, loss_P2)
