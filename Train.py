@@ -32,11 +32,11 @@ beta = 2
 
 def test(model, path, dataset):
     
-    global val_loss                                                                     ###### updated #######
-    loss_P2_rec = AvgMeter()
-    loss_P1_rec = AvgMeter()
-    loss_p1p2_rec = AvgMeter()
-    loss_total_rec = AvgMeter()
+#     global val_loss                                                                     ###### updated #######
+#     loss_P2_rec = AvgMeter()
+#     loss_P1_rec = AvgMeter()
+#     loss_p1p2_rec = AvgMeter()
+#     loss_total_rec = AvgMeter()
    
 
     data_path = os.path.join(path, dataset)
@@ -57,20 +57,20 @@ def test(model, path, dataset):
         
         ###### calculate loss & append it to global val_loss #######
 
-        loss_P1 = structure_loss(res, gts)
-        loss_P2 = structure_loss(res1, gts)
-        loss_p1p2 = loss_P1 + loss_P2
-        loss = loss_P1 + alpha*loss_P2 + beta*loss_p1p2
+#         loss_P1 = structure_loss(res, gts)
+#         loss_P2 = structure_loss(res1, gts)
+#         loss_p1p2 = mean_squared_error(loss_P1, loss_P2)
+#         loss = loss_P1 + alpha*loss_P2 + beta*loss_p1p2
         
-        loss_P2_rec.update(loss_P2.data, opt.batchsize)
-        loss_P1_rec.update(loss_P1.data, opt.batchsize)
-        loss_p1p2_rec.update(loss_p1p2.data, opt.batchsize)
-        loss_total_rec.update(loss.data, opt.batchsize)
+#         loss_P2_rec.update(loss_P2.data, opt.batchsize)
+#         loss_P1_rec.update(loss_P1.data, opt.batchsize)
+#         loss_p1p2_rec.update(loss_p1p2.data, opt.batchsize)
+#         loss_total_rec.update(loss.data, opt.batchsize)
         
-        val_loss['val_loss_p1'].append(loss_P1_rec)
-        val_loss['val_loss_p2'].append(loss_P2_rec)
-        val_loss['val_loss_p1p2'].append(loss_p1p2_rec)
-        val_loss['val_loss_total'].append(loss_total_rec)
+#         val_loss['val_loss_p1'].append(loss_P1_rec)
+#         val_loss['val_loss_p2'].append(loss_P2_rec)
+#         val_loss['val_loss_p1p2'].append(loss_p1p2_rec)
+#         val_loss['val_loss_total'].append(loss_total_rec)
         
         # eval Dice
         res = F.upsample(res + res1 , size=gt.shape, mode='bilinear', align_corners=False)
@@ -122,7 +122,7 @@ def train(train_loader, model, optimizer, epoch, test_path):
             beta = 2
             loss_P1 = structure_loss(P1, gts)
             loss_P2 = structure_loss(P2, gts)
-            loss_p1p2 = loss_P1 + loss_P2
+            loss_p1p2 = mean_squared_error(loss_P1 , loss_P2)
             loss = loss_P1 + alpha*loss_P2 + beta*loss_p1p2
             # ---- backward ----
             loss.backward()
@@ -249,20 +249,20 @@ def plot_train_loss(train_loss=None, loss_name = None):
  
     #############    Validation - loss curve ###########
     
-def plot_val_loss(val_loss=None, valloss_name = None):
-    color = ['red', 'lawngreen', 'blue'] #'lime', 'gold', 'm', 'plum', 'blue'
-    line = ['-', "--"]
-    for i in range(len(valloss_name)):
-        plt.plot(val_loss[valloss_name[i]], label=valloss_name[i], color=color[i], linestyle=line[(i + 1) % 2])
-        #### transfuse and axhline are just to add horizontal line.. nothing to do with chart data ####
-        ## 'GlaS': 0.902, 'CVC-ClinicDB': 0.918, 'Kvasir': 0.918, 'CVC-ColonDB': 0.773,'ETIS-LaribPolypDB': 0.733, 'test':0.83
-        transfuse = {'ValA': 0.902, 'TestA': 0.83, 'TestB': 0.773}   #'CVC-300' 
-        plt.axhline(y=transfuse[valloss_name[i]], color=color[i], linestyle='-')
-    plt.xlabel("epoch")
-    plt.ylabel("loss")
-    plt.title('Validation - loss vs epochs')
-    plt.legend()
-    plt.savefig('val_loss-epoch.png')
+# def plot_val_loss(val_loss=None, valloss_name = None):
+#     color = ['red', 'lawngreen', 'blue'] #'lime', 'gold', 'm', 'plum', 'blue'
+#     line = ['-', "--"]
+#     for i in range(len(valloss_name)):
+#         plt.plot(val_loss[valloss_name[i]], label=valloss_name[i], color=color[i], linestyle=line[(i + 1) % 2])
+#         #### transfuse and axhline are just to add horizontal line.. nothing to do with chart data ####
+#         ## 'GlaS': 0.902, 'CVC-ClinicDB': 0.918, 'Kvasir': 0.918, 'CVC-ColonDB': 0.773,'ETIS-LaribPolypDB': 0.733, 'test':0.83
+#         transfuse = {'ValA': 0.902, 'TestA': 0.83, 'TestB': 0.773}   #'CVC-300' 
+#         plt.axhline(y=transfuse[valloss_name[i]], color=color[i], linestyle='-')
+#     plt.xlabel("epoch")
+#     plt.ylabel("loss")
+#     plt.title('Validation - loss vs epochs')
+#     plt.legend()
+#     plt.savefig('val_loss-epoch.png')
     
 
 ####################################################################################################################################################
@@ -365,10 +365,10 @@ if __name__ == '__main__':
         train(train_loader, model, optimizer, epoch, opt.test_path)
         plot_train(dict_plot, name)                           # validation--> meandice score vs epochs
         plot_train_loss(train_loss, loss_name)                # training --> loss vs epochs
-        plot_val_loss(val_loss, valloss_name)                 # validation -> loss vs epochs
+#         plot_val_loss(val_loss, valloss_name)                 # validation -> loss vs epochs
          
     
     # plot the eval.png in the training stage
     plot_train(dict_plot, name)
     plot_train_loss(train_loss, loss_name)
-    plot_val_loss(val_loss, valloss_name)
+#     plot_val_loss(val_loss, valloss_name)
