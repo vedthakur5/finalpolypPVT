@@ -13,8 +13,8 @@ for _data_name in ['TestA', 'TestB', 'Val']:
         if i == 5:
          break
         ipath = path + f
-        mpath = path[0:-7] + 'masks/' + f
-        ppath = path[0:-12] + 'result_map/PolypPVT/{}/'.format(_data_name) + f
+        mpath = '/content/drive/MyDrive/BTP/{}/'.format(_data_name) + 'masks/' + f
+        ppath = '/content/drive/MyDrive/BTP/' + 'result_map/PolypPVT/{}/'.format(_data_name) + f
         img1 = cv2.imread(ipath)
         half1 = cv2.resize(img1, (0, 0), fx = 0.4, fy = 0.4)
         img2 = cv2.imread(mpath)
