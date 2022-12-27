@@ -325,7 +325,7 @@ if __name__ == '__main__':
                         help='path to testing Kvasir dataset')
 
     parser.add_argument('--train_save', type=str,
-                        default='./model_pth/'+model_name+'/')
+                        default='./content/drive/MyDrive/BTP/pretrained_path/'+model_name+'/')
 
     opt = parser.parse_args()
     logging.basicConfig(filename='train_log.log',
