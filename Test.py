@@ -2,6 +2,7 @@ import torch
 import torch.nn.functional as F
 import numpy as np
 import os, argparse
+from os import listdir
 from scipy import misc
 from lib.pvt import PolypPVT
 from utils.dataloader import test_dataset
@@ -10,7 +11,7 @@ import cv2
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--testsize', type=int, default=352, help='testing size')
-    parser.add_argument('--pth_path', type=str, default=f'/content/drive/MyDrive/BTP/41PolypPVT.pth')
+    parser.add_argument('--pth_path', type=str, default=f'/content/drive/MyDrive/BTP/pretrained_path/PolypPVT-best.pth')
     opt = parser.parse_args()
     model = PolypPVT()
     model.load_state_dict(torch.load(opt.pth_path))
@@ -42,6 +43,32 @@ if __name__ == '__main__':
             cv2.imwrite(save_path+name, res*255)
         print(_data_name, 'Finish!')
         
+#     from google.colab.patches import cv2_imshow
+
+
+    # Read the image
+    # for img in
+    # img1 = cv2.imread('/content/drive/MyDrive/BTP/GlaS/images/testA_1.png')  
+    # cv2_imshow(img1)
+
+    path = '/content/drive/MyDrive/BTP/GlaS/images/'
+    i = 0
+    for f in os.listdir(path):
+      if i == 5:
+        break
+      ipath = path + f
+      mpath = path[0:-7] + 'masks/' + f
+      ppath = path[0:-12] + 'result_map/PolypPVT/GlaS/' + f
+      img1 = cv2.imread(ipath)
+      half1 = cv2.resize(img1, (0, 0), fx = 0.4, fy = 0.4)
+      img2 = cv2.imread(mpath)
+      half2 = cv2.resize(img2, (0, 0), fx = 0.4, fy = 0.4)
+      img3 = cv2.imread(ppath)
+      half3 = cv2.resize(img3, (0, 0), fx = 0.4, fy = 0.4)
+      print("              Image                                   Ground Truth                              Predicted")
+      Hori = np.concatenate((half1, half2, half3), axis=1)
+      cv2.imshow(Hori)
+      i = i+1
         ############### visualize in tabular manner and show  final dice score for test data   ########################
         
 #        inputs, masks = next(iter(val_loader))
