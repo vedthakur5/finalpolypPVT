@@ -173,7 +173,7 @@ def train(train_loader, model, optimizer, epoch, test_path):
         dict_plot['TestB'].append(meandiceB)
         if meandiceA > best:
             best = meandiceA
-            PATH = f'/content/drive/MyDrive/BTP/'
+            PATH = f'/content/drive/MyDrive/BTP/pretrained_path/'
             torch.save(model.state_dict(), PATH + 'PolypPVT.pth')
             torch.save(model.state_dict(), PATH + 'PolypPVT-best.pth')
             print('##############################################################################best', best)
