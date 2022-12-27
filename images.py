@@ -3,6 +3,7 @@ import numpy as np
 from google.colab.patches import cv2_imshow
 import os
 from os import listdir
+from google.colab.patches import cv2_imshow
 
 for _data_name in ['TestA', 'TestB', 'Val']: 
 
@@ -23,5 +24,5 @@ for _data_name in ['TestA', 'TestB', 'Val']:
         half3 = cv2.resize(img3, (0, 0), fx = 0.4, fy = 0.4)
         print("              Image                                   Ground Truth                              Predicted")
         Hori = np.concatenate((half1, half2, half3), axis=1)
-        cv2.imshow('img',Hori)
+        cv2_imshow(Hori)
         i=i+1
