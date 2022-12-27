@@ -18,7 +18,7 @@ if __name__ == '__main__':
     model.cuda()
     model.eval()
    
-    for _data_name in ['GlaS', 'CVC-ClinicDB', 'Kvasir', 'CVC-ColonDB', 'ETIS-LaribPolypDB']:   #'CVC-300'
+    for _data_name in ['TestA', 'TestB', 'Val']:   #'CVC-300'
 
         ##### put data_path here #####    #
         data_path = './dataset/TestDataset/{}'.format(_data_name)
