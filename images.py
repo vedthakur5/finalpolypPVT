@@ -23,5 +23,5 @@ for _data_name in ['TestA', 'TestB', 'Val']:
         half3 = cv2.resize(img3, (0, 0), fx = 0.4, fy = 0.4)
         print("              Image                                   Ground Truth                              Predicted")
         Hori = np.concatenate((half1, half2, half3), axis=1)
-        cv2.imshow(Hori)
+        cv2.imshow('img',Hori)
         i=i+1
