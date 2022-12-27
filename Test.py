@@ -68,7 +68,7 @@ if __name__ == '__main__':
       print("              Image                                   Ground Truth                              Predicted")
       Hori = np.concatenate((half1, half2, half3), axis=1)
       cv2.imshow(Hori)
-      i = i+1
+      i=i+1
         ############### visualize in tabular manner and show  final dice score for test data   ########################
         
 #        inputs, masks = next(iter(val_loader))
