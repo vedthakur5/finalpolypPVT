@@ -176,6 +176,10 @@ def train(train_loader, model, optimizer, epoch, test_path):
             PATH = f'/content/drive/MyDrive/BTP/pretrained_path/'
             torch.save(model.state_dict(), PATH + 'PolypPVT.pth')
             torch.save(model.state_dict(), PATH + 'PolypPVT-best.pth')
+            print('loss P1:', loss_P1)
+            print('loss P2:', loss_P2)
+            print('loss P1P2:', loss_p1p2)
+            print('loss Total:', loss)
             print('##############################################################################best', best)
             logging.info('##############################################################################best:{}'.format(best))
        
