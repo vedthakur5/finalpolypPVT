@@ -141,7 +141,7 @@ def train(train_loader, model, optimizer, epoch, test_path):
         # ---- train visualization ----
         if i % 20 == 0 or i == total_step:
             print('{} Epoch [{:03d}/{:03d}], Step [{:04d}/{:04d}], '
-                  ' lateral-5(loss_p2): {:0.4f}], loss_p1: {:0.4f}, loss_p1p2: {:0.4f}, total_loss: {:0.4f}'.
+                  ' lateral-5(loss_p2_record): {:0.4f}]'.
                   format(datetime.now(), epoch, opt.epoch, i, total_step,
                          loss_P2_record.show()))
             train_loss['train_loss_p1'].append(loss_P1_record)
@@ -176,10 +176,6 @@ def train(train_loader, model, optimizer, epoch, test_path):
             PATH = f'/content/drive/MyDrive/BTP/pretrained_path/'
             torch.save(model.state_dict(), PATH + 'PolypPVT.pth')
             torch.save(model.state_dict(), PATH + 'PolypPVT-best.pth')
-            print('loss P1:', loss_P1)
-            print('loss P2:', loss_P2)
-            print('loss P1P2:', loss_p1p2)
-            print('loss Total:', loss)
             print('##############################################################################best', best)
             logging.info('##############################################################################best:{}'.format(best))
        
