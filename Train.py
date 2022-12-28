@@ -117,8 +117,8 @@ def train(train_loader, model, optimizer, epoch, test_path):
             # ---- forward ----
             P1, P2= model(images)
             # ---- loss function ----
-            alpha = 1.5
-            beta = 2
+            alpha = 0.3
+            beta = 0.7
             loss_P1 = structure_loss(P1, gts)
             loss_P2 = structure_loss(P2, gts)
 #             nloss_P1 = loss_P1.cpu().detach().numpy()
