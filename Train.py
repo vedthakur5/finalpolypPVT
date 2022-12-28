@@ -143,7 +143,7 @@ def train(train_loader, model, optimizer, epoch, test_path):
             print('{} Epoch [{:03d}/{:03d}], Step [{:04d}/{:04d}], '
                   ' lateral-5(loss_p2): {:0.4f}], loss_p1: {:0.4f}, loss_p1p2: {:0.4f}, total_loss: {:0.4f}'.
                   format(datetime.now(), epoch, opt.epoch, i, total_step,
-                         loss_P2_record.show()))
+                         loss_P2_record.show(), loss_P1_record.show(), loss_p1p2_record.show(), loss_total_record.show()))
             train_loss['train_loss_p1'].append(loss_P1_record)
             train_loss['train_loss_p2'].append(loss_P2_record)
             train_loss['train_loss_p1p2'].append(loss_p1p2_record)
