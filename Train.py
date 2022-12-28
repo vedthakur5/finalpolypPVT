@@ -375,5 +375,5 @@ if __name__ == '__main__':
     
     # plot the eval.png in the training stage
     plot_train(dict_plot, name)
-#     plot_train_loss(train_loss, loss_name)
+#     plot_train_loss(train_loss, loss_name) #
 #     plot_val_loss(val_loss, valloss_name)
