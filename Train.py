@@ -89,7 +89,7 @@ def test(model, path, dataset):
 
     return DSC / num1
 
-exp_num = 3
+global exp_num = 3
 
 def train(train_loader, model, optimizer, epoch, test_path):
     model.train()
