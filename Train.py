@@ -115,16 +115,16 @@ def train(train_loader, model, optimizer, epoch, test_path):
             # ---- forward ----
             P1, P2= model(images)
             # ---- loss function ----
-            alpha = 1.2
-            beta = 0.8
+#             alpha = 1.2
+#             beta = 0.8
             loss_P1 = structure_loss(P1, gts)
             loss_P2 = structure_loss(P2, gts)
 #             nloss_P1 = loss_P1.cpu().detach().numpy()
 #             nloss_P2 = loss_P2.cpu().detach().numpy()
-            mse = nn.MSELoss()
+#             mse = nn.MSELoss()
 #             loss_p1p2 = np.square(np.subtract(nloss_P1, nloss_P2)).mean()
-            loss_p1p2 = mse(loss_P1, loss_P2)
-            loss = loss_P1 + alpha*loss_P2 + beta*loss_p1p2
+#             loss_p1p2 = mse(loss_P1, loss_P2)
+            loss = loss_P1 + loss_P2                      #loss_P1 + alpha*loss_P2 + beta*loss_p1p2
             # ---- backward ----
             loss.backward()
             clip_gradient(optimizer, opt.clip)
@@ -133,25 +133,25 @@ def train(train_loader, model, optimizer, epoch, test_path):
             if rate == 1:
                 loss_P2_record.update(loss_P2.data, opt.batchsize)
                 loss_P1_record.update(loss_P1.data, opt.batchsize)
-                loss_p1p2_record.update(loss_p1p2.data, opt.batchsize)
+#                 loss_p1p2_record.update(loss_p1p2.data, opt.batchsize)
                 loss_total_record.update(loss.data, opt.batchsize)
           #  train_loss += loss.item()*data.size(0)                                       ############ updated #############
         # ---- train visualization ----
         if i % 20 == 0 or i == total_step:
             print('{} Epoch [{:03d}/{:03d}], Step [{:04d}/{:04d}], '
-                  ' lateral-5(loss_p2): {:0.4f}], loss_p1: {:0.4f}, loss_p1p2: {:0.4f}, total_loss: {:0.4f}'.
+                  ' lateral-5(loss_p2): {:0.4f}], loss_p1: {:0.4f}, total_loss: {:0.4f}'.                     
                   format(datetime.now(), epoch, opt.epoch, i, total_step,
-                         loss_P2_record.show(), loss_P1_record.show(), loss_p1p2_record.show(), loss_total_record.show()))
+                         loss_P2_record.show(), loss_P1_record.show(), loss_total_record.show()))   #loss_p1p2: {:0.4f}, loss_p1p2_record.show(), 
             train_loss['train_loss_p1'].append(loss_P1_record)
             train_loss['train_loss_p2'].append(loss_P2_record)
-            train_loss['train_loss_p1p2'].append(loss_p1p2_record)
+#             train_loss['train_loss_p1p2'].append(loss_p1p2_record)
             train_loss['train_loss_total'].append(loss_total_record)
             
     # save model 
     save_path = (opt.train_save)
     if not os.path.exists(save_path):
         os.makedirs(save_path)
-    torch.save(model.state_dict(), save_path +str(epoch)+ 'PolypPVT4.pth')
+    torch.save(model.state_dict(), save_path +str(epoch)+ 'PolypPVT1.pth')
     # choose the best model
 
     global dict_plot
@@ -172,14 +172,14 @@ def train(train_loader, model, optimizer, epoch, test_path):
         if meandiceA > best:
             best = meandiceA
             PATH = f'/content/drive/MyDrive/BTP/pretrained_path/'
-            torch.save(model.state_dict(), PATH + 'PolypPVT4.pth')
-            torch.save(model.state_dict(), PATH + 'PolypPVT-best4.pth')
+            torch.save(model.state_dict(), PATH + 'PolypPVT1.pth')
+            torch.save(model.state_dict(), PATH + 'PolypPVT-best1.pth')
             print('##############################################################################best', best)
             logging.info('##############################################################################best:{}'.format(best))
        
     
     
-def save_checkpoint(state, filename = "my_checkpoint4.pth.tar"):
+def save_checkpoint(state, filename = "my_checkpoint1.pth.tar"):
     path = f'/content/drive/MyDrive/BTP/{filename}' #/my_checkpoint.pth.tar'
     print("=>Saving Checkpoint")
     torch.save(state, path)
@@ -355,7 +355,7 @@ if __name__ == '__main__':
 
     print("#" * 20, "Start Training", "#" * 20)
     if load_model:
-        pth = f'/content/drive/MyDrive/BTP/my_checkpoint4.pth.tar'
+        pth = f'/content/drive/MyDrive/BTP/my_checkpoint1.pth.tar'
         if os.path.isfile(pth) == True:
             load_checkpoint(torch.load(pth))       #"my_checkpoint.pth.tar"
 
