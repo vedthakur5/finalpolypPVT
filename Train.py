@@ -133,7 +133,7 @@ def train(train_loader, model, optimizer, epoch, test_path):
             if rate == 1:
                 loss_P2_record.update(loss_P2.data, opt.batchsize)
                 loss_P1_record.update(loss_P1.data, opt.batchsize)
-#                 loss_p1p2_record.update(loss_p1p2.data, opt.batchsize)
+                loss_p1p2_record.update(loss_p1p2.data, opt.batchsize)
                 loss_total_record.update(loss.data, opt.batchsize)
           #  train_loss += loss.item()*data.size(0)                                       ############ updated #############
         # ---- train visualization ----
