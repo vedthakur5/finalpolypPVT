@@ -115,8 +115,8 @@ def train(train_loader, model, optimizer, epoch, test_path):
             # ---- forward ----
             P1, P2= model(images)
             # ---- loss function ----
-            alpha = 0.68
-            beta = 0.32
+            alpha = 1.2
+            beta = 0.8
             loss_P1 = structure_loss(P1, gts)
             loss_P2 = structure_loss(P2, gts)
 #             nloss_P1 = loss_P1.cpu().detach().numpy()
@@ -151,7 +151,7 @@ def train(train_loader, model, optimizer, epoch, test_path):
     save_path = (opt.train_save)
     if not os.path.exists(save_path):
         os.makedirs(save_path)
-    torch.save(model.state_dict(), save_path +str(epoch)+ 'PolypPVT3.pth')
+    torch.save(model.state_dict(), save_path +str(epoch)+ 'PolypPVT4.pth')
     # choose the best model
 
     global dict_plot
@@ -172,14 +172,14 @@ def train(train_loader, model, optimizer, epoch, test_path):
         if meandiceA > best:
             best = meandiceA
             PATH = f'/content/drive/MyDrive/BTP/pretrained_path/'
-            torch.save(model.state_dict(), PATH + 'PolypPVT3.pth')
-            torch.save(model.state_dict(), PATH + 'PolypPVT-best3.pth')
+            torch.save(model.state_dict(), PATH + 'PolypPVT4.pth')
+            torch.save(model.state_dict(), PATH + 'PolypPVT-best4.pth')
             print('##############################################################################best', best)
             logging.info('##############################################################################best:{}'.format(best))
        
     
     
-def save_checkpoint(state, filename = "my_checkpoint3.pth.tar"):
+def save_checkpoint(state, filename = "my_checkpoint4.pth.tar"):
     path = f'/content/drive/MyDrive/BTP/{filename}' #/my_checkpoint.pth.tar'
     print("=>Saving Checkpoint")
     torch.save(state, path)
@@ -355,7 +355,7 @@ if __name__ == '__main__':
 
     print("#" * 20, "Start Training", "#" * 20)
     if load_model:
-        pth = f'/content/drive/MyDrive/BTP/my_checkpoint3.pth.tar'
+        pth = f'/content/drive/MyDrive/BTP/my_checkpoint4.pth.tar'
         if os.path.isfile(pth) == True:
             load_checkpoint(torch.load(pth))       #"my_checkpoint.pth.tar"
 
