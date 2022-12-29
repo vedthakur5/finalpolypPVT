@@ -89,8 +89,6 @@ def test(model, path, dataset):
 
     return DSC / num1
 
-global exp_num = 3
-
 def train(train_loader, model, optimizer, epoch, test_path):
     model.train()
     global best
@@ -174,14 +172,14 @@ def train(train_loader, model, optimizer, epoch, test_path):
         if meandiceA > best:
             best = meandiceA
             PATH = f'/content/drive/MyDrive/BTP/pretrained_path/'
-            torch.save(model.state_dict(), PATH + 'PolypPVT{}.pth'.format(exp_num))
-            torch.save(model.state_dict(), PATH + 'PolypPVT-best{}.pth'.format(exp_num))
+            torch.save(model.state_dict(), PATH + 'PolypPVT3.pth'
+            torch.save(model.state_dict(), PATH + 'PolypPVT-best3.pth'
             print('##############################################################################best', best)
             logging.info('##############################################################################best:{}'.format(best))
        
     
     
-def save_checkpoint(state, filename = "my_checkpoint{}.pth.tar".format(exp_num)):
+def save_checkpoint(state, filename = "my_checkpoint3.pth.tar"):
     path = f'/content/drive/MyDrive/BTP/{filename}' #/my_checkpoint.pth.tar'
     print("=>Saving Checkpoint")
     torch.save(state, path)
@@ -357,7 +355,7 @@ if __name__ == '__main__':
 
     print("#" * 20, "Start Training", "#" * 20)
     if load_model:
-        pth = f'/content/drive/MyDrive/BTP/my_checkpoint{}.pth.tar'.format(exp_num)
+        pth = f'/content/drive/MyDrive/BTP/my_checkpoint3.pth.tar'
         if os.path.isfile(pth) == True:
             load_checkpoint(torch.load(pth))       #"my_checkpoint.pth.tar"
 
