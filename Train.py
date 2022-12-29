@@ -151,7 +151,7 @@ def train(train_loader, model, optimizer, epoch, test_path):
     save_path = (opt.train_save)
     if not os.path.exists(save_path):
         os.makedirs(save_path)
-    torch.save(model.state_dict(), save_path +str(epoch)+ 'PolypPVT{}.pth'.format(exp_num))
+    torch.save(model.state_dict(), save_path +str(epoch)+ 'PolypPVT3.pth')
     # choose the best model
 
     global dict_plot
@@ -172,8 +172,8 @@ def train(train_loader, model, optimizer, epoch, test_path):
         if meandiceA > best:
             best = meandiceA
             PATH = f'/content/drive/MyDrive/BTP/pretrained_path/'
-            torch.save(model.state_dict(), PATH + 'PolypPVT3.pth'
-            torch.save(model.state_dict(), PATH + 'PolypPVT-best3.pth'
+            torch.save(model.state_dict(), PATH + 'PolypPVT3.pth')
+            torch.save(model.state_dict(), PATH + 'PolypPVT-best3.pth')
             print('##############################################################################best', best)
             logging.info('##############################################################################best:{}'.format(best))
        
