@@ -11,7 +11,7 @@ import cv2
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--testsize', type=int, default=352, help='testing size')
-    parser.add_argument('--pth_path', type=str, default=f'/content/drive/MyDrive/BTP/pretrained_path/PolypPVT-best5.pth')
+    parser.add_argument('--pth_path', type=str, default=f'/content/drive/MyDrive/BTP/pretrained_path/compare.pth')
     opt = parser.parse_args()
     model = PolypPVT()
     model.load_state_dict(torch.load(opt.pth_path))
@@ -23,7 +23,7 @@ if __name__ == '__main__':
         ##### put data_path here #####    #
         data_path = './dataset/TestDataset/{}'.format(_data_name)
         ##### save_path #####
-        save_path = '/content/drive/MyDrive/BTP/result_map/PolypPVT5/{}/'.format(_data_name)
+        save_path = '/content/drive/MyDrive/BTP/result_map/PolypPVT6/{}/'.format(_data_name)
 
         if not os.path.exists(save_path):
             os.makedirs(save_path)
