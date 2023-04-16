@@ -151,7 +151,7 @@ def train(train_loader, model, optimizer, epoch, test_path):
     save_path = (opt.train_save)
     if not os.path.exists(save_path):
         os.makedirs(save_path)
-    torch.save(model.state_dict(), save_path +str(epoch)+ 'PolypPVT1.pth')
+    torch.save(model.state_dict(), save_path +str(epoch)+ 'PolypPVT6.pth')
     # choose the best model
 
     global dict_plot
@@ -172,14 +172,14 @@ def train(train_loader, model, optimizer, epoch, test_path):
         if meandiceA > best:
             best = meandiceA
             PATH = f'/content/drive/MyDrive/DC/pretrained_path/'
-            torch.save(model.state_dict(), PATH + 'PolypPVT1.pth')
-            torch.save(model.state_dict(), PATH + 'PolypPVT-best1.pth')
+            torch.save(model.state_dict(), PATH + 'PolypPVT6.pth')
+            torch.save(model.state_dict(), PATH + 'PolypPVT-best6.pth')
             print('##############################################################################best', best)
             logging.info('##############################################################################best:{}'.format(best))
        
     
     
-def save_checkpoint(state, filename = "my_checkpoint1.pth.tar"):
+def save_checkpoint(state, filename = "my_checkpoint6.pth.tar"):
     path = f'/content/drive/MyDrive/DC/{filename}' #/my_checkpoint.pth.tar'
     print("=>Saving Checkpoint")
     torch.save(state, path)
@@ -289,13 +289,13 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--epoch', type=int,
-                        default=100, help='epoch number')
+                        default=80, help='epoch number')
 
     parser.add_argument('--lr', type=float,
                         default=1e-4, help='learning rate')
 
     parser.add_argument('--optimizer', type=str,
-                        default='AdamW', help='choosing optimizer AdamW or SGD')
+                        default='SGD', help='choosing optimizer AdamW or SGD')
 
     parser.add_argument('--augmentation',
                         default=False, help='choose to do random flip rotation')
@@ -310,10 +310,10 @@ if __name__ == '__main__':
                         default=0.5, help='gradient clipping margin')
 
     parser.add_argument('--decay_rate', type=float,
-                        default=0.1, help='decay rate of learning rate')
+                        default=1e-5, help='decay rate of learning rate')
 
     parser.add_argument('--decay_epoch', type=int,
-                        default=50, help='every n epochs decay learning rate')
+                        default=30, help='every n epochs decay learning rate')
 
     parser.add_argument('--train_path', type=str,
                         default='./dataset/TrainDataset/',
@@ -324,7 +324,7 @@ if __name__ == '__main__':
                         help='path to testing Kvasir dataset')
 
     parser.add_argument('--train_save', type=str,
-                        default='./content/drive/MyDrive/BTP/pretrained_path/')
+                        default='./content/drive/MyDrive/DC/pretrained_path/')
 
     opt = parser.parse_args()
     logging.basicConfig(filename='train_log.log',
@@ -355,7 +355,7 @@ if __name__ == '__main__':
 
     print("#" * 20, "Start Training", "#" * 20)
     if load_model:
-        pth = f'/content/drive/MyDrive/DC/my_checkpoint1.pth.tar'
+        pth = f'/content/drive/MyDrive/DC/my_checkpoint6.pth.tar'
         if os.path.isfile(pth) == True:
             load_checkpoint(torch.load(pth))       #"my_checkpoint.pth.tar"
 
