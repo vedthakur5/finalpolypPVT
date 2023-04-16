@@ -115,8 +115,8 @@ def train(train_loader, model, optimizer, epoch, test_path):
             # ---- forward ----
             P1, P2= model(images)
             # ---- loss function ----
-            alpha = 0.1
-            beta = 0.9
+            alpha = 0.3
+            beta = 0.7
             loss_P1 = structure_loss(P1, gts)
             loss_P2 = structure_loss(P2, gts)
 #             nloss_P1 = loss_P1.cpu().detach().numpy()
@@ -151,7 +151,7 @@ def train(train_loader, model, optimizer, epoch, test_path):
     save_path = (opt.train_save)
     if not os.path.exists(save_path):
         os.makedirs(save_path)
-    torch.save(model.state_dict(), save_path +str(epoch)+ 'PolypPVT5.pth')
+    torch.save(model.state_dict(), save_path +str(epoch)+ 'PolypPVT1.pth')
     # choose the best model
 
     global dict_plot
@@ -171,16 +171,16 @@ def train(train_loader, model, optimizer, epoch, test_path):
         dict_plot['TestB'].append(meandiceB)
         if meandiceA > best:
             best = meandiceA
-            PATH = f'/content/drive/MyDrive/BTP/pretrained_path/'
-            torch.save(model.state_dict(), PATH + 'PolypPVT5.pth')
-            torch.save(model.state_dict(), PATH + 'PolypPVT-best5.pth')
+            PATH = f'/content/drive/MyDrive/DC/pretrained_path/'
+            torch.save(model.state_dict(), PATH + 'PolypPVT1.pth')
+            torch.save(model.state_dict(), PATH + 'PolypPVT-best1.pth')
             print('##############################################################################best', best)
             logging.info('##############################################################################best:{}'.format(best))
        
     
     
-def save_checkpoint(state, filename = "my_checkpoint5.pth.tar"):
-    path = f'/content/drive/MyDrive/BTP/{filename}' #/my_checkpoint.pth.tar'
+def save_checkpoint(state, filename = "my_checkpoint1.pth.tar"):
+    path = f'/content/drive/MyDrive/DC/{filename}' #/my_checkpoint.pth.tar'
     print("=>Saving Checkpoint")
     torch.save(state, path)
 
@@ -355,7 +355,7 @@ if __name__ == '__main__':
 
     print("#" * 20, "Start Training", "#" * 20)
     if load_model:
-        pth = f'/content/drive/MyDrive/BTP/my_checkpoint5.pth.tar'
+        pth = f'/content/drive/MyDrive/DC/my_checkpoint1.pth.tar'
         if os.path.isfile(pth) == True:
             load_checkpoint(torch.load(pth))       #"my_checkpoint.pth.tar"
 
@@ -367,11 +367,11 @@ if __name__ == '__main__':
         adjust_lr(optimizer, opt.lr, epoch, 0.1, 200)
         train(train_loader, model, optimizer, epoch, opt.test_path)
         plot_train(dict_plot, name)                           # validation--> meandice score vs epochs
-#         plot_train_loss(train_loss, loss_name)                # training --> loss vs epochs
+        plot_train_loss(train_loss, loss_name)                # training --> loss vs epochs
 #         plot_val_loss(val_loss, valloss_name)                 # validation -> loss vs epochs
          
     
     # plot the eval.png in the training stage
     plot_train(dict_plot, name)
-#     plot_train_loss(train_loss, loss_name) #
+    plot_train_loss(train_loss, loss_name) 
 #     plot_val_loss(val_loss, valloss_name)
